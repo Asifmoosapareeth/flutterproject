@@ -6,10 +6,16 @@ import 'package:flutterproject/screens/ott_screen.dart';
 //     debugShowCheckedModeBanner: false,
 //     home: PhoneAuth(),));
 // }
-class PhoneAuth extends StatelessWidget {
+class PhoneAuth extends StatefulWidget {
    PhoneAuth({super.key});
 
+  @override
+  State<PhoneAuth> createState() => _PhoneAuthState();
+}
+
+class _PhoneAuthState extends State<PhoneAuth> {
   final phonenumberController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,11 +39,11 @@ class PhoneAuth extends StatelessWidget {
           ElevatedButton(onPressed: () async{
             await FirebaseAuth.instance.verifyPhoneNumber(
                 verificationCompleted: (PhoneAuthCredential credential){},
-                verificationFailed: (FirebaseException ex){},
-                codeSent: (String Verificationid, int? resendtoken){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpScreen(verificationid: Verificationid,)));
+                verificationFailed: (FirebaseException e){},
+                codeSent: (String verificationid, int? resendtoken){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpScreen(verificationid: verificationid,)));
                 },
-                codeAutoRetrievalTimeout: (String verificationId){},
+                codeAutoRetrievalTimeout: (String verificationid){},
                 phoneNumber: phonenumberController.text.toString());
           },
               child: Text('Verify Phone number'))

@@ -38,12 +38,14 @@ final otpController = TextEditingController();
           ElevatedButton(onPressed: ()async{
             try{
             PhoneAuthCredential credential =
-            await PhoneAuthProvider.credential(verificationId: widget.verificationid,
+            await PhoneAuthProvider.credential(
+                verificationId: widget.verificationid,
                 smsCode: otpController.text.toString());
             FirebaseAuth.instance.signInWithCredential(credential).then((value){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
             });
             }catch(ex){
+              print(ex.toString());
             }
 
           },
